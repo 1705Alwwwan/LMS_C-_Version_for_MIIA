@@ -1,0 +1,51 @@
+version: '3.8'
+
+services:
+  # ============================================================================
+  # LMS MI Assuyutiyah Full-Stack Web & RESTful API Service
+  # ============================================================================
+  lms-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: lms-mi-assuyutiyah
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:3000/api/health"]
+      interval: 30s
+      timeout: 5s
+      start_period: 10s
+      retries: 3
+    networks:
+      - lms-network
+
+  # ============================================================================
+  # Optional: PostgreSQL Database (Ready for when you want persistent SQL)
+  # Uncomment below to activate persistent database in the future
+  # ============================================================================
+  # postgres-db:
+  #   image: postgres:16-alpine
+  #   container_name: lms-postgres-db
+  #   restart: unless-stopped
+  #   environment:
+  #     POSTGRES_DB: lms_assuyutiyah
+  #     POSTGRES_USER: lms_admin
+  #     POSTGRES_PASSWORD: secure_lms_password_123
+  #   volumes:
+  #     - postgres_data:/var/lib/postgresql/data
+  #   ports:
+  #     - "5432:5432"
+  #   networks:
+  #     - lms-network
+
+networks:
+  lms-network:
+    driver: bridge
+
+# volumes:
+#   postgres_data:

@@ -1,0 +1,30 @@
+@import "tailwindcss";
+
+@layer utilities {
+  .font-arabic {
+    font-family: 'Amiri', serif;
+  }
+  @media (max-width: 767px) {
+    .desktop-sidebar-only {
+      display: none !important;
+    }
+  }
+  @media (min-width: 768px) {
+    .mobile-only {
+      display: none !important;
+    }
+  }
+}
+
+@media print {
+  body {
+    background: white !important;
+    color: black !important;
+  }
+  .no-print {
+    display: none !important;
+  }
+  .print-only {
+    display: block !important;
+  }
+}
